@@ -52,6 +52,9 @@ add_to_log($course->id, 'mythtranscode', 'view', "view.php?id={$cm->id}", $mytht
 // Get the filename of the video to access.
 $filename = optional_param('filename', '', PARAM_CLEAN);
 
+// TODO - Remove this bit
+$filename = '-Wonders_of_Life-Size_Matters-20130217210000.webm';
+
 // Split the filename on dots (e.g., foo.bar.baz.qux.webm ->
 // ['foo', 'bar', 'baz', 'qux', 'webm']).
 $parts = explode('.', $filename);
@@ -69,4 +72,4 @@ $filename = preg_replace("/[^A-Za-z0-9_\-]/", '', array_pop($parts));
 header('Content-Type: video/' . $extension);
 
 // Read the file and return it.
-echo readfile("/var/www/vhosts/vle.uctc.org.uk/moodledata/repository/TV_Recordings/{$filename}.{$extension}");
+echo readfile("{$CFG->mod_mythtranscode_base_path}/{$filename}.{$extension}");

@@ -109,9 +109,23 @@ $default = 'title,description,subtitle,category';
 $setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_CLEAN, 12);
 $settings->add($setting);
 
+$name = 'mod_mythtranscode_bold_fields';
+$title = get_string('setting_bold_fields_title', 'mythtranscode');
+$description = get_string('setting_bold_fields_description', 'mythtranscode');
+$default = 'title';
+$setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_CLEAN, 12);
+$settings->add($setting);
+
 $name = 'mod_mythtranscode_base_path';
 $title = get_string('setting_base_path_title', 'mythtranscode');
 $description = get_string('setting_base_path_description', 'mythtranscode');
-$default = '/var/www/vhosts/vle.uctc.org.uk/moodledata/repository/TV_Recordings/';
+$default = '/var/tv/recordings';
 $setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_CLEAN, 12);
+$settings->add($setting);
+
+$name = 'mod_mythtranscode_downloads';
+$title = get_string('setting_downloads_title', 'mythtranscode');
+$description = get_string('setting_downloads_description', 'mythtranscode');
+$default = '1';
+$setting = new admin_setting_configcheckbox($name, $title, $description, $default);
 $settings->add($setting);

@@ -143,7 +143,7 @@ class mythtranscode_search_form {
 
         // Add a search box, with a prefilled query if we have one.
         $value = empty($this->query) ? '' : "value='{$this->query}'";
-        $form .= "<input type='search' results='5' id='mythtranscode_searchbox'
+        $form .= "<input type='search' id='mythtranscode_searchbox'
                     placeholder='Search...' {$value} name=query>";
 
         // Add a hidden field containing the course/instance id. This is needed
@@ -247,14 +247,21 @@ class mythtranscode_results_table implements renderable {
 
         $cells = array();
         foreach ($data_row as $key => $cell) {
+            // If we need to, make the text in the cell bold
+            if (in_array($key, mythtranscode_get_bold_fields())) {
+                $text = html_writer::tag('b', $cell);
+            } else {
+                $text = $cell;
+            }
+
             // If the cell should contain a link, generate it.
             if (in_array($key, mythtranscode_get_link_keys())) {
                 $data = $base_data;
                 $data['basename'] = $original_row['basename'];
-                $contents = html_writer::link(new moodle_url('watch.php', $data), $cell);
+                $contents = html_writer::link(new moodle_url('watch.php', $data), $text);
             } else {
                 // Otherwise just put text in the cell.
-                $contents = $cell;
+                $contents = $text;
             }
 
             array_push($cells, $contents);
@@ -311,6 +318,8 @@ class mod_mythtranscode_renderer extends plugin_renderer_base {
         $sources = array();
         $downloads = array();
 
+        global $CFG;
+
         // For each format the video is stored in.
         foreach (mythtranscode_get_formats() as $format) {
             // TODO: Fix long lines.
@@ -328,11 +337,16 @@ class mod_mythtranscode_renderer extends plugin_renderer_base {
         // Combine all of the HTML5 video tags.
         $player = html_writer::tag('video', implode($sources), array('controls' => true,
             'width' => '60%', 'autoplay' => true));
+        $out = $this->output->container($player, 'video');
 
-        // Combine all of the download links.
-        $download_links = "Download: " . implode($downloads);
+        // Combine all of the download links, if download links have been
+        // configured to be shown
+        if ($CFG->mod_mythtranscode_downloads == '1') {
+            $download_links = html_writer::tag('b', 'Download: ') . implode($downloads);
 
-        return $this->output->container($player, 'video').
-            $this->output->container($download_links, 'video_links');
+            return $out . $this->output->container($download_links, 'video_links');
+        } else {
+            return $out;
+        }
     }
 }

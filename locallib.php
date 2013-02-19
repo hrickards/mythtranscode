@@ -83,6 +83,16 @@ function mythtranscode_get_query_fields() {
 }
 
 /**
+ * Return the database fields to bolden
+ *
+ * @return array[string]
+ */
+function mythtranscode_get_bold_fields() {
+    global $CFG;
+    return explode(',', $CFG->mod_mythtranscode_bold_fields);
+}
+
+/**
  * Retrieves and returns the first NUM_MATCHING matching results, as well
  * as the total number of matching results (recorded shows).
  *

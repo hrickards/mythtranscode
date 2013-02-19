@@ -26,15 +26,15 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['modulename'] = 'mythtranscode';
-$string['modulenameplural'] = 'mythtranscodes';
-$string['modulename_help'] = 'Allows access to recorded television programmes using mythtranscode';
-$string['mythtranscodefieldset'] = 'mythtranscode';
-$string['mythtranscodename'] = 'mythtranscode';
-$string['mythtranscodename_help'] = 'mythtranscode';
-$string['mythtranscode'] = 'mythtranscode';
+$string['modulename'] = 'Mythtranscode Plugin';
+$string['modulenameplural'] = 'Mythtranscode Plugins';
+$string['modulename_help'] = 'Allows access to recorded television programmes using MythTV and MythTranscode';
+$string['mythtranscodefieldset'] = 'Mythtranscode Plugin';
+$string['mythtranscodename'] = 'Mythtranscode Plugin';
+$string['mythtranscodename_help'] = 'Allows access to recorded television programmes using MythTV and MythTranscode';
+$string['mythtranscode'] = 'Mythtranscode';
 $string['pluginadministration'] = 'mythtranscode administration';
-$string['pluginname'] = 'mythtranscode';
+$string['pluginname'] = 'Mythtranscode';
 
 $string['must_specify_id'] = 'You must specify a course_module ID or an instance ID';
 $string['heading'] = 'Television Programmes';
@@ -84,5 +84,11 @@ $string['setting_formats_description'] = 'Video formats the television recording
 $string['setting_query_fields_title'] = 'Query fields';
 $string['setting_query_fields_description'] = 'A comma-separated list of database fields to match searches against, in order of priority';
 
+$string['setting_bold_fields_title'] = 'Bold fields';
+$string['setting_bold_fields_description'] = 'A comma-separated list of database fields to make bold in the results';
+
 $string['setting_base_path_title'] = 'Base path';
 $string['setting_base_path_description'] = 'The base filesystem path under which all video recordings are located';
+
+$string['setting_downloads_title'] = 'Downloads';
+$string['setting_downloads_description'] = 'Enable links to download videos';
