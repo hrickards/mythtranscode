@@ -19,14 +19,14 @@
  *
  * @package    mod_mythtranscode
  * @subpackage mythtranscode
- * @copyright  2013 UCTC
+ * @copyright  2013 Harry Rickards <hrickards@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 /**
  * Used for creting navigation (page numbers and previous/forward links)
  *
- * @copyright  2013 UCTC
+ * @copyright  2013 Harry Rickards <hrickards@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class mythtranscode_pagination {
@@ -114,7 +114,7 @@ class mythtranscode_pagination {
 /**
  * Creates a search form, with query as the only user-inputtable field
  *
- * @copyright  2013 UCTC
+ * @copyright  2013 Harry Rickards <hrickards@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class mythtranscode_search_form {
@@ -168,7 +168,7 @@ class mythtranscode_search_form {
  * Class representing a video recording
  * Just used for generating URLS for rendering onscreen
  *
- * @copyright  2013 UCTC
+ * @copyright  2013 Harry Rickards <hrickards@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class mythtranscode_video implements renderable {
@@ -195,7 +195,7 @@ class mythtranscode_video implements renderable {
  * Class representing a table of search results (of recordings)
  * Used for rendering such data onscreen
  *
- * @copyright  2013 UCTC
+ * @copyright  2013 Harry Rickards <hrickards@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class mythtranscode_results_table implements renderable {
@@ -277,7 +277,7 @@ class mythtranscode_results_table implements renderable {
  *
  * @see plugin_renderer_base
  *
- * @copyright  2013 UCTC
+ * @copyright  2013 Harry Rickards <hrickards@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class mod_mythtranscode_renderer extends plugin_renderer_base {

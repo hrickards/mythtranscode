@@ -22,7 +22,7 @@
  *
  * @package    mod_mythtranscode
  * @subpackage mythtranscode
- * @copyright  2013 UCTC
+ * @copyright  2013 Harry Rickards <hrickards@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -33,7 +33,7 @@ require_once($CFG->dirroot.'/course/moodleform_mod.php');
 /**
  * Module instance settings form
  *
- * @copyright  2013 UCTC
+ * @copyright  2013 Harry Rickards <hrickards@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class mod_mythtranscode_mod_form extends moodleform_mod {

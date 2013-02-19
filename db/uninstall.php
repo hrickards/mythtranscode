@@ -21,7 +21,7 @@
  *
  * @package    mod_mythtranscode
  * @subpackage mythtranscode
- * @copyright  2013 UCTC
+ * @copyright  2013 Harry Rickards <hrickards@gmail.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
