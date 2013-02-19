@@ -1,0 +1,7 @@
+Moodle Activity module for accessing MythTV recordings.
+
+To setup, enter the settings as required in the activity module settings.
+
+Note, changing the columns shown may need tweaks to the CSS.
+
+Television icon dedicated to the public domain by chrisdesign of Open Clip Art Library under the CC0 1.0 Universal license.
