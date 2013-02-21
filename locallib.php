@@ -40,7 +40,7 @@ defined('MOODLE_INTERNAL') || die();
 function mythtranscode_create_video_url($filename, $format, $param_string) {
     global $CFG;
 
-    $filename = urlencode(preg_replace('/\.m4v$/', '', $filename));
+    $filename = urlencode(preg_replace('/\.(m4v|mp4|webm)$/', '', $filename));
 
     // MP4 format can be .mp4 or .m4v, so there's a setting for it
     if ($format == 'mp4') {
