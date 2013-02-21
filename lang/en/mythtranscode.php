@@ -52,7 +52,7 @@ $string['format_webm'] = 'WebM';
 $string['format_ogg'] = 'Ogg';
 
 $string['setting_host_title'] = 'Host';
-$string['setting_host_description'] = 'Database hostname';
+$string['setting_host_description'] = 'Hostname of the mythtv/mythtranscode database';
 
 $string['setting_port_title'] = 'Port';
 $string['setting_port_description'] = 'Database port';
@@ -66,8 +66,14 @@ $string['setting_password_description'] = 'Database password';
 $string['setting_database_title'] = 'Database';
 $string['setting_database_description'] = 'Database name';
 
-$string['setting_table_title'] = 'Table';
-$string['setting_table_description'] = 'Database table';
+$string['setting_table_title'] = 'Programmes table';
+$string['setting_table_description'] = 'Database table with metadata about the programmes recorded. On a default installation of mythtv, just recorded.';
+
+$string['setting_encoded_table_title'] = 'Encoded table';
+$string['setting_encoded_table_description'] = 'Database table with filenames of the encoded programmes. On a default installation of mythtranscode, just mythexport.';
+
+$string['setting_channel_table_title'] = 'Channel table';
+$string['setting_channel_table_description'] = 'Database channel with channel information in. On a default installation of mythtv, just channel'.
 
 $string['setting_num_results_title'] = 'Num. results';
 $string['setting_num_results_description'] = 'Number of results to show per page';

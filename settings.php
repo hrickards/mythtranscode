@@ -44,7 +44,7 @@ $settings->add($setting);
 $name = 'mod_mythtranscode_username';
 $title = get_string('setting_username_title', 'mythtranscode');
 $description = get_string('setting_username_description', 'mythtranscode');
-$default = 'mythtranscode';
+$default = 'mythtv';
 $setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_CLEAN, 12);
 $settings->add($setting);
 
@@ -58,7 +58,7 @@ $settings->add($setting);
 $name = 'mod_mythtranscode_database';
 $title = get_string('setting_database_title', 'mythtranscode');
 $description = get_string('setting_database_description', 'mythtranscode');
-$default = 'mythtranscode';
+$default = 'mythconverg';
 $setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_CLEAN, 12);
 $settings->add($setting);
 
@@ -66,6 +66,20 @@ $name = 'mod_mythtranscode_table';
 $title = get_string('setting_table_title', 'mythtranscode');
 $description = get_string('setting_table_description', 'mythtranscode');
 $default = 'recorded';
+$setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_CLEAN, 12);
+$settings->add($setting);
+
+$name = 'mod_mythtranscode_encoded_table';
+$title = get_string('setting_encoded_table_title', 'mythtranscode');
+$description = get_string('setting_encoded_table_description', 'mythtranscode');
+$default = 'mythexport';
+$setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_CLEAN, 12);
+$settings->add($setting);
+
+$name = 'mod_mythtranscode_channel_table';
+$title = get_string('setting_channel_table_title', 'mythtranscode');
+$description = get_string('setting_channel_table_description', 'mythtranscode');
+$default = 'channel';
 $setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_CLEAN, 12);
 $settings->add($setting);
 
@@ -93,7 +107,10 @@ $settings->add($setting);
 $name = 'mod_mythtranscode_formats';
 $title = get_string('setting_formats_title', 'mythtranscode');
 $description = get_string('setting_formats_description', 'mythtranscode');
-$defaultsetting = array('webm'=>get_string('format_webm', 'mythtranscode'));
+$defaultsetting = array(
+    'webm'=>get_string('format_webm', 'mythtranscode'),
+    'mp4'=>get_string('format_mp4', 'mythtranscode')
+);
 $choices = array(
     'ogg'=>get_string('format_ogg', 'mythtranscode'),
     'webm'=>get_string('format_webm', 'mythtranscode'),

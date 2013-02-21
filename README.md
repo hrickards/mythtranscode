@@ -2,6 +2,7 @@
 Moodle activity module for accessing MythTV recordings, transcoded to HTML5 video formats using mythtranscode.
 
 ## Installation instructions
+ - Install Mythtranscode into MythTv, and mount the output directory over NFS on the moodle server
  - Clone or unzip this folder into the mod folder of your root moodle directory
  - Login to moodle and follow the onscreen instructions to install the plugin
  - Fill out the onscreen settings page. You'll probably need to change the database details (Host, Port, Username, Password, Database and Table), and the base path (the folder under which the video recordsings are stored), but the rest should be fine as default. If you're storing video in more than just WebM, you will also need to change the Video formats setting.

@@ -131,7 +131,7 @@ function mythtranscode_get_filename_metadata($basename) {
     // Retrive the record from recorded
     // For explanation of depth of error-reporting, see
     // http://stackoverflow.com/questions/2552545
-    $stmt = $mysqli->prepare('SELECT title, description, progstart, chanid, seriesid FROM recorded WHERE basename = ? LIMIT 1');
+    $stmt = $mysqli->prepare("SELECT title, description, progstart, chanid, seriesid FROM {$CFG->mod_mythtranscode_table} WHERE basename = ? LIMIT 1");
     if (false===$stmt) {
         print_error(get_string('prepare_error', 'mythtranscode'));
     }
@@ -154,7 +154,7 @@ function mythtranscode_get_filename_metadata($basename) {
     $stmt->close();
 
     // Find the channel name.
-    $stmt = $mysqli->prepare('SELECT name from channel WHERE chanid = ? LIMIT 1');
+    $stmt = $mysqli->prepare("SELECT name from {$CFG->mod_mythtranscode_channel_table} WHERE chanid = ? LIMIT 1");
     if (false===$stmt) {
         print_error(get_string('prepare_error', 'mythtranscode'));
     }
@@ -191,7 +191,7 @@ function mythtranscode_get_filename_metadata($basename) {
 
     // Find the corresponding mythexport record by finding a record where the
     // title, description and progstart->airDate match exactly
-    $stmt = $mysqli->prepare('SELECT file FROM mythexport WHERE title = ? AND description = ? AND airDate = ? LIMIT 1');
+    $stmt = $mysqli->prepare("SELECT file FROM {$CFG->mod_mythtranscode_encoded_table} WHERE title = ? AND description = ? AND airDate = ? LIMIT 1");
     if (false===$stmt) {
         print_error(get_string('prepare_error', 'mythtranscode'));
     }
