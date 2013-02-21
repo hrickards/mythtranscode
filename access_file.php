@@ -64,9 +64,16 @@ $extension = preg_replace("/[^A-Za-z0-9]/", '', array_pop($parts));
 // non-(alphanumeric|dash|underscore) characters.
 $filename = preg_replace("/[^A-Za-z0-9_\-]/", '', array_pop($parts));
 
+// The format is just the extension, or mp4 if the extension is m4v
+if ($extension === 'm4v') {
+    $format = 'mp4';
+} else {
+    $format = $extension;
+}
+
 // Set the content type. Guessing it like this from the file extension is a
 // bit of a hack, but works wull enough for all of the HTML5 video types.
-header('Content-Type: video/' . $extension);
+header('Content-Type: video/' . $format);
 
 // Read the file and return it, if it exists
 $filepath = "{$CFG->mod_mythtranscode_base_path}/{$filename}.{$extension}";

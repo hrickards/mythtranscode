@@ -41,7 +41,6 @@ ul.mythtranscode_pagination li a img { border: none }
 ul.mythtranscode_pagination li a:hover,
 ul.mythtranscode_pagination li a.current { background: #FFFFFF }
 table.mythtranscode_results_table td.c0 { width: 18% }
-table.mythtranscode_results_table td.c1 { width: 15% }
-table.mythtranscode_results_table td.c3 { width: 10% }
-table.mythtranscode_results_table td.c4 { width: 15% }
+table.mythtranscode_results_table td.c2 { width: 10% }
+table.mythtranscode_results_table td.c3 { width: 15% }
 input#mythtranscode_searchbox { width: 80% }
