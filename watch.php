@@ -84,8 +84,7 @@ if (mythtranscode_recording_has_files($filename)) {
     echo $output->render($video);
 } else {
     // Display an informative message
-    // TODO Style this
-    echo html_writer::tag('p', get_string('unavailable_recording', 'mythtranscode'));
+    echo $OUTPUT->notification(get_string('unavailable_recording', 'mythtranscode'));
 }
 
 // Finish the page.
