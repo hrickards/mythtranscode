@@ -164,8 +164,6 @@ function mythtranscode_get_filename($basename) {
     }
     $stmt->close();
 
-    // TODO Do this a better way.
-
     return $filename;
 }
 
