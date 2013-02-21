@@ -259,6 +259,9 @@ class mythtranscode_results_table implements renderable {
             // If we need to, make the text in the cell bold
             if (in_array($key, mythtranscode_get_bold_fields())) {
                 $text = html_writer::tag('b', $cell);
+            } else if ($key === 'progstart') {
+                // Format the date
+                $text = mythtranscode_format_date($cell);
             } else {
                 $text = $cell;
             }
@@ -349,9 +352,12 @@ class mod_mythtranscode_renderer extends plugin_renderer_base {
             'width' => '60%', 'autoplay' => true));
         $out = $this->output->container($player, 'video');
 
+        // Format the date
+        $date = mythtranscode_format_date($video->date);
+
         // Output some video metadata
         $out .= html_writer::tag('b', $video->title . ',');
-        $out .= " {$video->channel}, {$video->date}";
+        $out .= " {$video->channel}, {$date}";
 
         // Combine all of the download links, if download links have been
         // configured to be shown

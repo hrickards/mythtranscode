@@ -81,6 +81,17 @@ function mythtranscode_get_formats() {
 }
 
 /**
+ * Takes in a MySQL-format date, and returns one in a user-friendly format
+ *
+ * @param string $date
+ * @return string
+ */
+function mythtranscode_format_date($date) {
+    $phpdate = strtotime($date);
+    return date('d/m/y H:i', $phpdate);
+}
+
+/**
  * Return the database fields to query against
  *
  * @return array[string]
