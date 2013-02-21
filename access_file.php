@@ -73,5 +73,5 @@ $filepath = "{$CFG->mod_mythtranscode_base_path}/{$filename}.{$extension}";
 if (file_exists($filepath)) {
     echo readfile($filepath);
 } else {
-    print_error("File not found");
+    print_error(get_string('file_not_found', 'mythtranscode'));
 }

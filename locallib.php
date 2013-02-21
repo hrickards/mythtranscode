@@ -234,8 +234,7 @@ function mythtranscode_retrieve_results($query, $start) {
 
     // $results/$count is false if an error was encountered.
     if ($results == false or $count == false) {
-        // TODO All errrors into go into strings file.
-        print_error("mythtranscode: Error in querying database", 0);
+        print_error(get_string('database_error', 'mythtranscode'));
         return array(false, false);
     } else if ($results->num_rows < 1) {
         return array(false, false);
