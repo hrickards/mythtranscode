@@ -116,23 +116,54 @@ function mythtranscode_get_filename($basename) {
         $CFG->mod_mythtranscode_port);
 
     // Retrive the record from recorded
+    // For explanation of depth of error-reporting, see
+    // http://stackoverflow.com/questions/2552545
     $stmt = $mysqli->prepare('SELECT title, description, progstart FROM recorded WHERE basename = ? LIMIT 1');
-    $stmt->bind_param('s', $basename);
-    $stmt->execute();
-    $stmt->bind_result($title, $description, $progstart);
-    $stmt->fetch();
+    if (false===$stmt) {
+        print_error(get_string('prepare_error', 'mythtranscode'));
+    }
+    $rc = $stmt->bind_param('s', $basename);
+    if (false===$rc) {
+        print_error(get_string('bind_param_error', 'mythtranscode'));
+    }
+    $rc = $stmt->execute();
+    if (false===$rc) {
+        print_error(get_string('execute_error', 'mythtranscode'));
+    }
+    $rc = $stmt->bind_result($title, $description, $progstart);
+    if (false===$rc) {
+        print_error(get_string('bind_result_error', 'mythtranscode'));
+    }
+    $rc = $stmt->fetch();
+    if (false===$rc) {
+        print_error(get_string('fetch_error', 'mythtranscode'));
+    }
     $stmt->close();
 
     // Find the corresponding mythexport record by finding a record where the
     // title, description and progstart->airDate match exactly
     $stmt = $mysqli->prepare('SELECT file FROM mythexport WHERE title = ? AND description = ? AND airDate = ? LIMIT 1');
-    $stmt->bind_param('sss', $title, $description, $progstart);
-    $stmt->execute();
-    $stmt->bind_result($filename);
-    $stmt->fetch();
+    if (false===$stmt) {
+        print_error(get_string('prepare_error', 'mythtranscode'));
+    }
+    $rc = $stmt->bind_param('sss', $title, $description, $progstart);
+    if (false===$rc) {
+        print_error(get_string('bind_param_error', 'mythtranscode'));
+    }
+    $rc = $stmt->execute();
+    if (false===$rc) {
+        print_error(get_string('execute_error', 'mythtranscode'));
+    }
+    $rc = $stmt->bind_result($filename);
+    if (false===$rc) {
+        print_error(get_string('bind_result_error', 'mythtranscode'));
+    }
+    $rc = $stmt->fetch();
+    if (false===$rc) {
+        print_error(get_string('fetch_error', 'mythtranscode'));
+    }
     $stmt->close();
 
-    // TODO Error checking properly everywhere
     // TODO Do this a better way.
 
     return $filename;
