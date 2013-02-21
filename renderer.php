@@ -361,7 +361,7 @@ class mod_mythtranscode_renderer extends plugin_renderer_base {
             $out .= $this->output->container($download_links, 'mythtranscode_video_links');
         }
 
-        $out .= html_writer::tag('p', get_string('copyright_string', 'mythtranscode'));
+        $out .= html_writer::tag('p', get_string('copyright_string', 'mythtranscode'), array('class'=>'mythtranscode_copyright'));
 
         return $out;
     }

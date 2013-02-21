@@ -36,6 +36,10 @@ form#mythtranscode_search_form {
     margin-right: auto;
     width:50%;
 }
+p.mythtranscode_copyright {
+    color: red;
+    font-weight: bold;
+}
 ul.mythtranscode_pagination li a.mythtranscode_inactive { background: #AAAAAA }
 ul.mythtranscode_pagination li a img { border: none }
 ul.mythtranscode_pagination li a:hover,
