@@ -257,8 +257,10 @@ class mythtranscode_results_table implements renderable {
             // If the cell should contain a link, generate it.
             if (in_array($key, mythtranscode_get_link_keys())) {
                 $data = $base_data;
+                $link_options = array('class'=>'mythtranscode_link');
                 $data['basename'] = $original_row['basename'];
-                $contents = html_writer::link(new moodle_url('watch.php', $data), $text);
+
+                $contents = html_writer::link(new moodle_url('watch.php', $data), $text, $link_options);
             } else {
                 // Otherwise just put text in the cell.
                 $contents = $text;

@@ -44,3 +44,8 @@ table.mythtranscode_results_table td.c0 { width: 18% }
 table.mythtranscode_results_table td.c2 { width: 10% }
 table.mythtranscode_results_table td.c3 { width: 15% }
 input#mythtranscode_searchbox { width: 80% }
+
+a.mythtranscode_link:link { color: #0000FF }
+a.mythtranscode_link:active { color: #FF0000 }
+a.mythtranscode_link:visited { color: #800080 }
+a.mythtranscode_link:hover { color: #0000FF }
