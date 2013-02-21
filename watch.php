@@ -77,10 +77,16 @@ if ($id) {
 $basename = required_param('basename', PARAM_CLEAN);
 list($filename, $title, $date, $channel) = mythtranscode_get_filename_metadata($basename);
 
-// Output the video using a renderer.
-$output = $PAGE->get_renderer('mod_mythtranscode');
-$video = new mythtranscode_video($filename, $param_string, $title, $date, $channel);
-echo $output->render($video);
+// If the recording has transcodings, output the video using a renderer.
+if (mythtranscode_recording_has_files($filename)) {
+    $output = $PAGE->get_renderer('mod_mythtranscode');
+    $video = new mythtranscode_video($filename, $param_string, $title, $date, $channel);
+    echo $output->render($video);
+} else {
+    // Display an informative message
+    // TODO Style this
+    echo html_writer::tag('p', get_string('unavailable_recording', 'mythtranscode'));
+}
 
 // Finish the page.
 echo $OUTPUT->footer();

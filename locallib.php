@@ -101,6 +101,19 @@ function mythtranscode_get_bold_fields() {
 }
 
 /**
+ * Returns true iff the recording with the passed filename has transcodings present
+ *
+ * @param string $filename
+ * @return bool
+ */
+function mythtranscode_recording_has_files($filename) {
+    global $CFG;
+
+    $filepath = "{$CFG->mod_mythtranscode_base_path}/{$filename}";
+    return !is_null($filename) and file_exists($filepath);
+}
+
+/**
  * Given a recorded.basename field, finds the corresponding record
  * in mythexport and returns mythexport.file, along with some other metadata
  *
