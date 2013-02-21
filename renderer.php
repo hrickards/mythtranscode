@@ -322,7 +322,6 @@ class mod_mythtranscode_renderer extends plugin_renderer_base {
 
         // For each format the video is stored in.
         foreach (mythtranscode_get_formats() as $format) {
-            // TODO: Fix long lines.
             // Generate an HTML5 video tag.
             $tag = html_writer::empty_tag('source', array('src' => $video->urls[$format],
                 'type' => "video/{$format}"));
