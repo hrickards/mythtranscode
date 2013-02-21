@@ -102,12 +102,12 @@ function mythtranscode_get_bold_fields() {
 
 /**
  * Given a recorded.basename field, finds the corresponding record
- * in mythexport and returns mythexport.file
+ * in mythexport and returns mythexport.file, along with some other metadata
  *
  * @param string $basename
- * @return string
+ * @return array[string]
  */
-function mythtranscode_get_filename($basename) {
+function mythtranscode_get_filename_metadata($basename) {
     global $CFG;
 
     // Connect to the database.
@@ -118,7 +118,7 @@ function mythtranscode_get_filename($basename) {
     // Retrive the record from recorded
     // For explanation of depth of error-reporting, see
     // http://stackoverflow.com/questions/2552545
-    $stmt = $mysqli->prepare('SELECT title, description, progstart FROM recorded WHERE basename = ? LIMIT 1');
+    $stmt = $mysqli->prepare('SELECT title, description, progstart, chanid, seriesid FROM recorded WHERE basename = ? LIMIT 1');
     if (false===$stmt) {
         print_error(get_string('prepare_error', 'mythtranscode'));
     }
@@ -130,7 +130,7 @@ function mythtranscode_get_filename($basename) {
     if (false===$rc) {
         print_error(get_string('execute_error', 'mythtranscode'));
     }
-    $rc = $stmt->bind_result($title, $description, $progstart);
+    $rc = $stmt->bind_result($title, $description, $progstart, $chanid, $seriesid);
     if (false===$rc) {
         print_error(get_string('bind_result_error', 'mythtranscode'));
     }
@@ -139,6 +139,42 @@ function mythtranscode_get_filename($basename) {
         print_error(get_string('fetch_error', 'mythtranscode'));
     }
     $stmt->close();
+
+    // Find the channel name.
+    $stmt = $mysqli->prepare('SELECT name from channel WHERE chanid = ? LIMIT 1');
+    if (false===$stmt) {
+        print_error(get_string('prepare_error', 'mythtranscode'));
+    }
+    $rc = $stmt->bind_param('d', $chanid);
+    if (false===$rc) {
+        print_error(get_string('bind_param_error', 'mythtranscode'));
+    }
+    $rc = $stmt->execute();
+    if (false===$rc) {
+        print_error(get_string('execute_error', 'mythtranscode'));
+    }
+    $rc = $stmt->bind_result($channel);
+    if (false===$rc) {
+        print_error(get_string('bind_result_error', 'mythtranscode'));
+    }
+    $rc = $stmt->fetch();
+    if (false===$rc) {
+        print_error(get_string('fetch_error', 'mythtranscode'));
+    }
+    $stmt->close();
+
+    // If we don't have a channel, guess one from the seriesid
+    if (!$channel) {
+        if (strpos($seriesid, 'bbc')) {
+            $channel = 'BBC';
+        } else if (strpos($seriesid, 'itv')) {
+            $channel = 'ITV';
+        } else if (strpos($seriesid, '4')) {
+            $channel = 'Channel Four';
+        } else if (strpos($seriesid, 'five')) {
+            $channel = 'Five';
+        }
+    }
 
     // Find the corresponding mythexport record by finding a record where the
     // title, description and progstart->airDate match exactly
@@ -164,7 +200,7 @@ function mythtranscode_get_filename($basename) {
     }
     $stmt->close();
 
-    return $filename;
+    return array($filename, $title, $progstart, $channel);
 }
 
 /**

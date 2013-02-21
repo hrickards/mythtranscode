@@ -49,3 +49,5 @@ a.mythtranscode_link:link { color: #0000FF }
 a.mythtranscode_link:active { color: #FF0000 }
 a.mythtranscode_link:visited { color: #800080 }
 a.mythtranscode_link:hover { color: #0000FF }
+
+div.mythtranscode_video_links { padding: 0.5em 0 }

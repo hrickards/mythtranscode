@@ -73,13 +73,13 @@ if ($id) {
     $param_string = "n={$n}";
 }
 
-// Get the video filename
+// Get the video filename, title, date and channel
 $basename = required_param('basename', PARAM_CLEAN);
-$filename = mythtranscode_get_filename($basename);
+list($filename, $title, $date, $channel) = mythtranscode_get_filename_metadata($basename);
 
 // Output the video using a renderer.
 $output = $PAGE->get_renderer('mod_mythtranscode');
-$video = new mythtranscode_video($filename, $param_string);
+$video = new mythtranscode_video($filename, $param_string, $title, $date, $channel);
 echo $output->render($video);
 
 // Finish the page.

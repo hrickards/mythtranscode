@@ -105,3 +105,5 @@ $string['bind_param_error'] = 'Error querying database: bind_param() failed. Ple
 $string['bind_result_error'] = 'Error querying database: bind_result() failed. Please see your system administrator';
 $string['execute_error'] = 'Error querying database: execute() failed. Please see your system administrator';
 $string['fetch_error'] = 'Error querying database: fetch() failed. Please see your system administrator';
+
+$string['copyright_string'] = 'This recording is to be used only for educational and non-commercial purposes under the terms of the ERA Licence.';

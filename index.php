@@ -1,7 +1,7 @@
 <?php
 // This file is part of Moodle - http://moodle.org/
-// TODO Add info to watch page
 // TODO JS html5 player
+// TODO Hide videos without files
 // TODO More info on settings page
 //
 // Moodle is free software: you can redistribute it and/or modify

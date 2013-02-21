@@ -174,15 +174,24 @@ class mythtranscode_search_form {
 class mythtranscode_video implements renderable {
     public $basename;
     public $urls;
+    public $title;
+    public $date;
+    public $channel;
 
     /**
      * Construction function.
      *
      * @param $basename --- basename of the vidoe
+     * @param $title --- title of video
+     * @param $date --- date of recording
+     * @param $channel --- channel that broadcast recording
      * @param $param_string --- non-video parameters to include in the URL
      */
-    public function __construct($basename, $param_string) {
+    public function __construct($basename, $param_string, $title, $date, $channel) {
         $this->urls = array();
+        $this->title = $title;
+        $this->date = $date;
+        $this->channel = $channel;
 
         // For each video format, generate and store the video url for it.
         foreach (mythtranscode_get_formats() as $format) {
@@ -340,14 +349,20 @@ class mod_mythtranscode_renderer extends plugin_renderer_base {
             'width' => '60%', 'autoplay' => true));
         $out = $this->output->container($player, 'video');
 
+        // Output some video metadata
+        $out .= html_writer::tag('b', $video->title . ',');
+        $out .= " {$video->channel}, {$video->date}";
+
         // Combine all of the download links, if download links have been
         // configured to be shown
         if ($CFG->mod_mythtranscode_downloads == '1') {
             $download_links = html_writer::tag('b', 'Download: ') . implode($downloads);
 
-            return $out . $this->output->container($download_links, 'video_links');
-        } else {
-            return $out;
+            $out .= $this->output->container($download_links, 'mythtranscode_video_links');
         }
+
+        $out .= html_writer::tag('p', get_string('copyright_string', 'mythtranscode'));
+
+        return $out;
     }
 }
