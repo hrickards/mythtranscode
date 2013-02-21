@@ -68,8 +68,10 @@ $filename = preg_replace("/[^A-Za-z0-9_\-]/", '', array_pop($parts));
 // bit of a hack, but works wull enough for all of the HTML5 video types.
 header('Content-Type: video/' . $extension);
 
-echo "{$CFG->mod_mythtranscode_base_path}/{$filename}.{$extension}";
-
-// Read the file and return it.
-// TODO Only if it exists
-echo readfile("{$CFG->mod_mythtranscode_base_path}/{$filename}.{$extension}");
+// Read the file and return it, if it exists
+$filepath = "{$CFG->mod_mythtranscode_base_path}/{$filename}.{$extension}";
+if (file_exists($filepath)) {
+    echo readfile($filepath);
+} else {
+    error("File not found");
+}
