@@ -36,10 +36,6 @@ form#mythtranscode_search_form {
     margin-right: auto;
     width:50%;
 }
-p.mythtranscode_copyright {
-    color: red;
-    font-weight: bold;
-}
 ul.mythtranscode_pagination li a.mythtranscode_inactive { background: #AAAAAA }
 ul.mythtranscode_pagination li a img { border: none }
 ul.mythtranscode_pagination li a:hover,
@@ -53,5 +49,11 @@ a.mythtranscode_link:link { color: #0000FF }
 a.mythtranscode_link:active { color: #FF0000 }
 a.mythtranscode_link:visited { color: #800080 }
 a.mythtranscode_link:hover { color: #0000FF }
+
+a.mythtranscode_copyright { font-weight: bold}
+a.mythtranscode_copyright:link { color: red }
+a.mythtranscode_copyright:active { color: red }
+a.mythtranscode_copyright:visited { color: red }
+a.mythtranscode_copyright:hover { color: red }
 
 div.mythtranscode_video_links { padding: 0.5em 0 }

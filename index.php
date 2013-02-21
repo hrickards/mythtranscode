@@ -25,7 +25,6 @@
 
 // TODO Put on moodle modules site
 // TODO Fix ipad playbaack
-// TODO Link to pdf
 // TODO Change name in add form
 // TODO Clean up
 // TODO What to do with index?
