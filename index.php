@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Just redirects to view.php
+ * Just displays a message at the moment
  *
  * @package    mod_mythtranscode
  * @subpackage mythtranscode
@@ -25,14 +25,39 @@
 
 // TODO Put on moodle modules site
 // TODO Clean up
-// TODO What to do with index?
 
 require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
 require_once(dirname(__FILE__).'/lib.php');
 
-$id = required_param('id', PARAM_INT);   // Course.
-$course = $DB->get_record('course', array('id' => $id), '*', MUST_EXIST);
-require_course_login($course);
+$id = required_param('id', PARAM_INT); // Course_module ID,
 
-// Redirect to view.php, with the correct course id.
-redirect('view.php?id='.$id);
+// Retrieve course details.
+$cm         = get_coursemodule_from_id('mythtranscode', $id, 0, false, MUST_EXIST);
+$course     = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
+$mythtranscode  = $DB->get_record('mythtranscode', array('id' => $cm->instance), '*', MUST_EXIST);
+
+// Some initial setup.
+require_login($course, true, $cm);
+$context = get_context_instance(CONTEXT_MODULE, $cm->id);
+
+add_to_log($course->id, 'mythtranscode', 'view', "view.php?id={$cm->id}", $mythtranscode->name, $cm->id);
+
+// Print the page header.
+
+$PAGE->set_url('/mod/mythtranscode/view.php', array('id' => $cm->id));
+$PAGE->set_title(format_string($mythtranscode->name));
+$PAGE->set_heading(format_string($course->fullname));
+$PAGE->set_context($context);
+
+// Output starts here.
+echo $OUTPUT->header();
+
+if ($mythtranscode->intro) { // Conditions to show the intro can change to look for own settings or whatever.
+    echo $OUTPUT->box(format_module_intro('mythtranscode', $mythtranscode, $cm->id),
+        'generalbox mod_introbox', 'mythtranscodeintro');
+}
+
+echo $OUTPUT->notification(get_string('no_index_page', 'mythtranscode'));
+
+// Finish the page.
+echo $OUTPUT->footer();
