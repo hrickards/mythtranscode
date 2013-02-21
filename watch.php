@@ -73,10 +73,13 @@ if ($id) {
     $param_string = "n={$n}";
 }
 
+// Get the video filename
+$basename = required_param('basename', PARAM_CLEAN);
+$filename = mythtranscode_get_filename($basename);
+
 // Output the video using a renderer.
-$basename = required_param('basename', PARAM_ALPHANUM);
 $output = $PAGE->get_renderer('mod_mythtranscode');
-$video = new mythtranscode_video($basename, $param_string);
+$video = new mythtranscode_video($filename, $param_string);
 echo $output->render($video);
 
 // Finish the page.

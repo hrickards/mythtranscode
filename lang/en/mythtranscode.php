@@ -92,3 +92,8 @@ $string['setting_base_path_description'] = 'The base filesystem path under which
 
 $string['setting_downloads_title'] = 'Downloads';
 $string['setting_downloads_description'] = 'Enable links to download videos';
+
+$string['setting_mp4extension_title'] = 'MP4 extension';
+$string['setting_mp4extension_description'] = 'The file extension of videos in the mp4 format';
+$string['extension_mp4'] = '.mp4';
+$string['extension_m4v'] = '.m4v';

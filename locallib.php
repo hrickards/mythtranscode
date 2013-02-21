@@ -30,15 +30,23 @@ defined('MOODLE_INTERNAL') || die();
 
 /**
  * Returns a URL for the video file containing a television show, given
- * the basename of a television show
+ * the filename of a television show
  *
- * @param string $basename
+ * @param string $filename
  * @param string $format
  * @param string $paramstring --- non-video parameters to include in the URL
  * @return string
  */
-function mythtranscode_create_video_url($basename, $format, $param_string) {
-    $filename = urlencode(preg_replace('/mpg$/', '', $basename));
+function mythtranscode_create_video_url($filename, $format, $param_string) {
+    global $CFG;
+
+    $filename = urlencode(preg_replace('/\.m4v$/', '', $filename));
+
+    // MP4 format can be .mp4 or .m4v, so there's a setting for it
+    if ($format == 'mp4') {
+        $format = $CFG->mod_mythtranscode_mp4extension;
+    }
+
     return "access_file.php?{$param_string}&filename={$filename}.{$format}";
 }
 
@@ -90,6 +98,46 @@ function mythtranscode_get_query_fields() {
 function mythtranscode_get_bold_fields() {
     global $CFG;
     return explode(',', $CFG->mod_mythtranscode_bold_fields);
+}
+
+/**
+ * Given a recorded.basename field, finds the corresponding record
+ * in mythexport and returns mythexport.file
+ *
+ * @param string $basename
+ * @return string
+ */
+function mythtranscode_get_filename($basename) {
+    global $CFG;
+
+    // Connect to the database.
+    $mysqli = new mysqli($CFG->mod_mythtranscode_host, $CFG->mod_mythtranscode_username,
+        $CFG->mod_mythtranscode_password, $CFG->mod_mythtranscode_database,
+        $CFG->mod_mythtranscode_port);
+
+    // Retrive the record from recorded
+    $stmt = $mysqli->prepare('SELECT title, description, progstart FROM recorded WHERE basename = ? LIMIT 1');
+    $stmt->bind_param('s', $basename);
+    $stmt->execute();
+    $stmt->bind_result($title, $description, $progstart);
+    $stmt->fetch();
+    $stmt->close();
+
+    // Find the corresponding mythexport record by finding a record where the
+    // title, description and progstart->airDate match exactly
+    $stmt = $mysqli->prepare('SELECT file FROM mythexport WHERE title = ? AND description = ? AND airDate = ? LIMIT 1');
+    $stmt->bind_param('sss', $title, $description, $progstart);
+    $stmt->execute();
+    $stmt->bind_result($filename);
+    $stmt->fetch();
+    $stmt->close();
+
+    // TODO Change all error()s to print_error()s
+    // TODO Error checking properly everywhere
+    // TODO Do this a better way.
+    // TODO Use prepared statements
+
+    return $filename;
 }
 
 /**

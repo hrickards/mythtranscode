@@ -129,3 +129,14 @@ $description = get_string('setting_downloads_description', 'mythtranscode');
 $default = '1';
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default);
 $settings->add($setting);
+
+$name = 'mod_mythtranscode_mp4extension';
+$title = get_string('setting_mp4extension_title', 'mythtranscode');
+$description = get_string('setting_mp4extension_description', 'mythtranscode');
+$defaultsetting = array('mp4'=>get_string('extension_mp4', 'mythtranscode'));
+$choices = array(
+    'mp4'=>get_string('extension_mp4', 'mythtranscode'),
+    'm4v'=>get_string('extension_m4v', 'mythtranscode')
+);
+$setting = new admin_setting_configselect($name, $title, $description, $defaultsetting, $choices);
+$settings->add($setting);
