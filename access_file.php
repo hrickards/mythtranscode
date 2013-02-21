@@ -40,7 +40,7 @@ if ($id) {
     $course     = $DB->get_record('course', array('id' => $mythtranscode->course), '*', MUST_EXIST);
     $cm         = get_coursemodule_from_instance('mythtranscode', $mythtranscode->id, $course->id, false, MUST_EXIST);
 } else {
-    error(get_string('must_specify_id', 'mythtranscode'));
+    print_error(get_string('must_specify_id', 'mythtranscode'));
 }
 
 // Some initial setup.
@@ -73,5 +73,5 @@ $filepath = "{$CFG->mod_mythtranscode_base_path}/{$filename}.{$extension}";
 if (file_exists($filepath)) {
     echo readfile($filepath);
 } else {
-    error("File not found");
+    print_error("File not found");
 }

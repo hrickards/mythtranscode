@@ -132,10 +132,8 @@ function mythtranscode_get_filename($basename) {
     $stmt->fetch();
     $stmt->close();
 
-    // TODO Change all error()s to print_error()s
     // TODO Error checking properly everywhere
     // TODO Do this a better way.
-    // TODO Use prepared statements
 
     return $filename;
 }
@@ -236,8 +234,8 @@ function mythtranscode_retrieve_results($query, $start) {
 
     // $results/$count is false if an error was encountered.
     if ($results == false or $count == false) {
-        // TODO Go into strings file.
-        error("mythtranscode: Error in querying database", 0);
+        // TODO All errrors into go into strings file.
+        print_error("mythtranscode: Error in querying database", 0);
         return array(false, false);
     } else if ($results->num_rows < 1) {
         return array(false, false);
