@@ -70,7 +70,7 @@ class mythtranscode_pagination {
             $link_data = $this->base_data;
             $link_data['start'] = ($this->current_page-2) *
                 $CFG->mod_mythtranscode_num_results;
-            array_push($navigation, html_writer::link(new moodle_url('view.php',
+            array_push($navigation, html_writer::link(new moodle_url('choose.php',
                 $link_data), 'Previous', array('class'=>'mythtranscode_previous')));
         } else {
             array_push($navigation, html_writer::tag('a', 'Previous',
@@ -87,7 +87,7 @@ class mythtranscode_pagination {
                 $css_attributes['class'] = 'current';
             }
 
-            array_push($navigation, html_writer::link(new moodle_url('view.php',
+            array_push($navigation, html_writer::link(new moodle_url('choose.php',
                 $link_data), $i, $css_attributes));
         }
 
@@ -97,7 +97,7 @@ class mythtranscode_pagination {
             $link_data = $this->base_data;
             $link_data['start'] = ($this->current_page) *
                 $CFG->mod_mythtranscode_num_results;
-            array_push($navigation, html_writer::link(new moodle_url('view.php',
+            array_push($navigation, html_writer::link(new moodle_url('choose.php',
                 $link_data), 'Next', array('class'=>'mythtranscode_next')));
         } else {
             array_push($navigation, html_writer::tag('a', 'Next',
@@ -146,16 +146,10 @@ class mythtranscode_search_form {
         $form .= "<input type='search' id='mythtranscode_searchbox'
                     placeholder='Search...' {$value} name=query>";
 
-        // Add a hidden field containing the course/instance id. This is needed
+        // Add a hidden field containing the course id. This is needed
         // as the data is being posted to the current page, which requires a
-        // course/instance id.
-        if ($this->basedata['id']) {
-            $form .= "<input type='hidden' name='id'
-                value='{$this->basedata['id']}'>";
-        } else {
-            $form .= "<input type='hidden' name='n'
-                value='{$this->basedata['n']}'>";
-        }
+        // course id.
+        $form .= "<input type='hidden' name='course' value='{$this->basedata['course']}'>";
 
         // Add a search button.
         $form .= '<button type="submit">Search</button></form>';
@@ -272,7 +266,7 @@ class mythtranscode_results_table implements renderable {
                 $link_options = array('class'=>'mythtranscode_link');
                 $data['basename'] = $original_row['basename'];
 
-                $contents = html_writer::link(new moodle_url('watch.php', $data), $text, $link_options);
+                $contents = html_writer::link(new moodle_url('chosen.php', $data), $text, $link_options);
             } else {
                 // Otherwise just put text in the cell.
                 $contents = $text;

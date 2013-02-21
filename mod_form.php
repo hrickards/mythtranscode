@@ -42,6 +42,7 @@ class mod_mythtranscode_mod_form extends moodleform_mod {
      * Defines forms elements
      */
     public function definition() {
+        $course_id = optional_param('course', 0, PARAM_INT); // Course_module ID. or
 
         $mform = $this->_form;
 
@@ -62,12 +63,9 @@ class mod_mythtranscode_mod_form extends moodleform_mod {
         // Adding the standard "intro" and "introformat" fields.
         $this->add_intro_editor();
 
-        // Adding the rest of mythtranscode settings, spreeading all them into this fieldset
-        // or adding more fieldsets ('header' elements) if needed for better logic.
-        $mform->addElement('static', 'label1', 'mythtranscodesetting1', 'Your mythtranscode fields go here. Replace me!');
 
-        $mform->addElement('header', 'mythtranscodefieldset', get_string('mythtranscodefieldset', 'mythtranscode'));
-        $mform->addElement('static', 'label2', 'mythtranscodesetting2', 'Your mythtranscode fields go here. Replace me!');
+        // Link to choose a television recording
+        $mform->addElement('static', 'choose_recording', 'Programme', html_writer::link(new moodle_url('/mod/mythtranscode/choose.php', array('course'=>$course_id)), 'Choose a television programme', array('target' => '_blank')));
 
         // Add standard elements, common to all modules.
         $this->standard_coursemodule_elements();

@@ -15,11 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Prints one instance of mythtranscode.
- *
- * Prints a particular instance of mythtranscode, containing a search form
- * and results from that form. Users can click on results and be taken
- * through to watch.php.
+ * Displays a television recording
  *
  * @package    mod_mythtranscode
  * @subpackage mythtranscode
@@ -32,21 +28,12 @@ require_once(dirname(__FILE__).'/lib.php');
 require_once(dirname(__FILE__).'/locallib.php');
 require_once(dirname(__FILE__).'/renderer.php');
 
-$id = optional_param('id', 0, PARAM_INT); // Course_module ID, or
-$n  = optional_param('n', 0, PARAM_INT);  // Mythtranscode instance ID - it should be named as the first character of the module.
+$id = required_param('id', PARAM_INT); // Course_module ID,
 
-// Retrieve course/instance details.
-if ($id) {
-    $cm         = get_coursemodule_from_id('mythtranscode', $id, 0, false, MUST_EXIST);
-    $course     = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
-    $mythtranscode  = $DB->get_record('mythtranscode', array('id' => $cm->instance), '*', MUST_EXIST);
-} else if ($n) {
-    $mythtranscode  = $DB->get_record('mythtranscode', array('id' => $n), '*', MUST_EXIST);
-    $course     = $DB->get_record('course', array('id' => $mythtranscode->course), '*', MUST_EXIST);
-    $cm         = get_coursemodule_from_instance('mythtranscode', $mythtranscode->id, $course->id, false, MUST_EXIST);
-} else {
-    print_error(get_string('must_specify_id', 'mythtranscode'));
-}
+// Retrieve course details.
+$cm         = get_coursemodule_from_id('mythtranscode', $id, 0, false, MUST_EXIST);
+$course     = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
+$mythtranscode  = $DB->get_record('mythtranscode', array('id' => $cm->instance), '*', MUST_EXIST);
 
 // Some initial setup.
 require_login($course, true, $cm);
@@ -64,64 +51,29 @@ $PAGE->set_context($context);
 // Output starts here.
 echo $OUTPUT->header();
 
-if ($mythtranscode->intro) {
+if ($mythtranscode->intro) { // Conditions to show the intro can change to look for own settings or whatever.
     echo $OUTPUT->box(format_module_intro('mythtranscode', $mythtranscode, $cm->id),
         'generalbox mod_introbox', 'mythtranscodeintro');
 }
 
-echo $OUTPUT->heading(get_string('heading', 'mythtranscode'));
+// When linking to videos, the course id must be sent
+// be sent
+$param_string = "id={$id}";
 
-// Get search parameters --- the query and the no. of results to start at (for pagination).
-$query = optional_param('query', '', PARAM_TEXT);
-$start = optional_param('start', 0, PARAM_INT);
+// Get the basename from the database
+$basename = $mythtranscode->basename;
 
-// When linking to watch.php, either the course or instance ID must also
-// be sent.
-if ($id) {
-    $base_data = array('id' => $id);
-} else {
-    $base_data = array('n' => $n);
-}
+// Get the video filename, title, date and channel
+list($filename, $title, $date, $channel) = mythtranscode_get_filename_metadata($basename);
 
-// Output a search form.
-$mform = new mythtranscode_search_form($base_data, $query);
-echo $mform->render();
-
-// Retrieve the results and total number of matching records.
-list($results, $count) = mythtranscode_retrieve_results($query, $start);
-
-// If no results found.
-if (!$results) {
-    echo $OUTPUT->box(get_string('no_results', 'mythtranscode'));
-} else {
-    // Create an array from the results (needed for rendering using moodle's)
-    // functions.
-    $data = array();
-    while ($row = $results->fetch_array(MYSQLI_ASSOC)) {
-        array_push($data, $row);
-    }
-
-    // Render the results.
+// If the recording has transcodings, output the video using a renderer.
+if (mythtranscode_recording_has_files($filename)) {
     $output = $PAGE->get_renderer('mod_mythtranscode');
-    $results_table = new mythtranscode_results_table($data, $base_data);
-    echo $output->render($results_table);
-
-    // Calculate the no. buttons needed for pagination, and the
-    // current page.
-    $num_pages = ceil($count/$CFG->mod_mythtranscode_num_results);
-    $current_page = min(ceil($start/$CFG->mod_mythtranscode_num_results)+1, $num_pages);
-
-    // The base data that will be sent with all navigation links.
-    $base_link_data = $base_data;
-    $base_link_data['query'] = $query;
-
-    // Render the pagination buttons, if we have more than one page.
-    if ($num_pages>1) {
-        $pagination = new mythtranscode_pagination($num_pages, $current_page,
-            $base_link_data);
-        echo $pagination->render();
-    }
-
+    $video = new mythtranscode_video($filename, $param_string, $title, $date, $channel);
+    echo $output->render($video);
+} else {
+    // Display an informative message
+    echo $OUTPUT->notification(get_string('unavailable_recording', 'mythtranscode'));
 }
 
 // Finish the page.

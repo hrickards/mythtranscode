@@ -66,9 +66,14 @@ function mythtranscode_supports($feature) {
 function mythtranscode_add_instance(stdClass $mythtranscode, mod_mythtranscode_mod_form $mform = null) {
     global $DB;
 
+    // TODO What if not in basename
+    $mythtranscode->basename = $_SESSION['basename'];
+
     $mythtranscode->timecreated = time();
 
-    return $DB->insert_record('mythtranscode', $mythtranscode);
+    $foo= $DB->insert_record('mythtranscode', $mythtranscode);
+
+    return $foo;
 }
 
 /**

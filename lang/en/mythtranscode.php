@@ -26,12 +26,12 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['modulename'] = 'Mythtranscode Plugin';
-$string['modulenameplural'] = 'Mythtranscode Plugins';
-$string['modulename_help'] = 'Allows access to recorded television programmes using MythTV and MythTranscode';
-$string['mythtranscodefieldset'] = 'Mythtranscode Plugin';
-$string['mythtranscodename'] = 'Mythtranscode Plugin';
-$string['mythtranscodename_help'] = 'Allows access to recorded television programmes using MythTV and MythTranscode';
+$string['modulename'] = 'Television Programmes';
+$string['modulenameplural'] = 'Television Programmes';
+$string['modulename_help'] = 'Allows access to recorded television programmes';
+$string['mythtranscodefieldset'] = 'Television Programmes';
+$string['mythtranscodename'] = 'Television Programmes';
+$string['mythtranscodename_help'] = 'Allows access to recorded television programmes';
 $string['mythtranscode'] = 'Mythtranscode';
 $string['pluginadministration'] = 'mythtranscode administration';
 $string['pluginname'] = 'Mythtranscode';
@@ -114,3 +114,5 @@ $string['fetch_error'] = 'Error querying database: fetch() failed. Please see yo
 
 $string['copyright_string'] = 'This recording is to be used only for educational and non-commercial purposes under the terms of the ERA Licence.';
 $string['unavailable_recording'] = 'Sorry, that recording is currently unavailable';
+
+$string['close_window'] = 'Return to form';

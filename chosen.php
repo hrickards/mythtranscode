@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Just redirects to view.php
+ * Saves the chosen recording id into the session
  *
  * @package    mod_mythtranscode
  * @subpackage mythtranscode
@@ -23,20 +23,32 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-// TODO Put on moodle modules site
-// TODO Fix ipad playbaack
-// TODO Red text
-// TODO Link to pdf
-// TODO Change name in add form
-// TODO Clean up
-// TODO What to do with index?
-
 require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
 require_once(dirname(__FILE__).'/lib.php');
 
-$id = required_param('id', PARAM_INT);   // Course.
-$course = $DB->get_record('course', array('id' => $id), '*', MUST_EXIST);
-require_course_login($course);
+// Get the course and recording IDs
+$course_id = required_param('course', PARAM_INT); // Course_module ID. or
+$basename = required_param('basename', PARAM_CLEAN);
 
-// Redirect to view.php, with the correct course id.
-redirect('view.php?id='.$id);
+// Retrieve course details.
+$course = $DB->get_record('course', array('id' => $course_id), '*', MUST_EXIST);
+
+// Some initial setup.
+// TODO: Require administrator permissions here
+require_login($course);
+
+add_to_log($course->id, 'mythtranscode', 'choose', "chosen.php?course={$course_id}&basename={$basename}", $mythtranscode->name);
+
+// Store the recording ID into the session
+session_start();
+$_SESSION['basename'] = $basename;
+
+// Automatically close the popup window
+echo '<script type="text/javascript">self.close()</script>';
+
+// Output starts here.
+echo $OUTPUT->header();
+
+// Output a close window button
+$close_text = get_string('close_window', 'mythtranscode');
+echo "<button onclick='self.close();'>{$close_text}</button>";

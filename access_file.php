@@ -81,6 +81,8 @@ if (is_file($filepath)) {
     // bit of a hack, but works well enough for all of the HTML5 video types.
     header('Content-Type: video/' . $format);
 
+    // TODO: Set url with correct extension
+
     if (isset($_SERVER['HTTP_RANGE'])) {
         rangeDownload($filepath);
     } else {
