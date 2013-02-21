@@ -38,7 +38,6 @@ $course_id = required_param('course', PARAM_INT); // Course_module ID. or
 $course = $DB->get_record('course', array('id' => $course_id), '*', MUST_EXIST);
 
 // Some initial setup.
-// TODO: Require administrator permissions here
 require_login($course);
 
 add_to_log($course->id, 'mythtranscode', 'choose', "choose.php?course={$course_id}", $mythtranscode->name);

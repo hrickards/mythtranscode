@@ -66,14 +66,18 @@ function mythtranscode_supports($feature) {
 function mythtranscode_add_instance(stdClass $mythtranscode, mod_mythtranscode_mod_form $mform = null) {
     global $DB;
 
-    // TODO What if not in basename
-    $mythtranscode->basename = $_SESSION['basename'];
+    // Add the basename from the session to the record, if it's there.
+    // If not, show an error;
+    $basename = $_SESSION['basename'];
+    if (isset($basename)) {
+        $mythtranscode->basename = $basename;
+    } else {
+        print_error(get_string('basename_not_found', 'mythtranscode'));
+    }
 
     $mythtranscode->timecreated = time();
 
-    $foo= $DB->insert_record('mythtranscode', $mythtranscode);
-
-    return $foo;
+    return $DB->insert_record('mythtranscode', $mythtranscode);
 }
 
 /**

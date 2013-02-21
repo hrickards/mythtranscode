@@ -34,7 +34,6 @@ $basename = required_param('basename', PARAM_CLEAN);
 $course = $DB->get_record('course', array('id' => $course_id), '*', MUST_EXIST);
 
 // Some initial setup.
-// TODO: Require administrator permissions here
 require_login($course);
 
 add_to_log($course->id, 'mythtranscode', 'choose', "chosen.php?course={$course_id}&basename={$basename}", $mythtranscode->name);

@@ -89,6 +89,11 @@ if (is_file($filepath)) {
         header("Content-Length: ".filesize($filepath));
         echo readfile($filepath);
     }
+} else {
+    // If the file can't be found, display a 404
+    header('HTTP/1.0 404 Not Found');
+    echo '<h1>404 Not Found</h1>';
+    echo 'The page that you have requested could not be found.';
 }
 
 

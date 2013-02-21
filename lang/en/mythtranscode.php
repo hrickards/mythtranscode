@@ -114,5 +114,6 @@ $string['fetch_error'] = 'Error querying database: fetch() failed. Please see yo
 
 $string['copyright_string'] = 'This recording is to be used only for educational and non-commercial purposes under the terms of the ERA Licence.';
 $string['unavailable_recording'] = 'Sorry, that recording is currently unavailable';
+$string['basename_not_found'] = 'Please select a programme and try again';
 
 $string['close_window'] = 'Return to form';
