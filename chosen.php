@@ -38,6 +38,7 @@ $course = $DB->get_record('course', array('id' => $course_id), '*', MUST_EXIST);
 require_login($course);
 
 add_to_log($course->id, 'mythtranscode', 'choose', "chosen.php?course={$course_id}&basename={$basename}", $mythtranscode->name);
+$PAGE->set_url('/mod/mythtranscode/chosen.php', array('course' => $course_id, 'basename' => $basename));
 
 // Store the recording ID into the session
 session_start();
@@ -63,7 +64,6 @@ if (mythtranscode_recording_has_files($filename)) {
     echo "<button onclick='self.close();'>{$close_text}</button>";
 } else {
     // Print the page header.
-    $PAGE->set_url('/mod/mythtranscode/chosen.php', array('course' => $course_id, 'basename' => $basename));
     $PAGE->set_title(format_string($mythtranscode->name));
     $PAGE->set_heading(format_string($course->fullname));
     $PAGE->set_context($context);
