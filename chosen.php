@@ -44,10 +44,14 @@ session_start();
 $_SESSION['basename'] = $basename;
 
 // Get the video filename (we need this for checking if any recordings are prsent)
-list($filename, $_, $_, $_) = mythtranscode_get_filename_metadata($basename);
+list($filename, $title, $_, $_) = mythtranscode_get_filename_metadata($basename);
 
 // If the recording has transcodings
 if (mythtranscode_recording_has_files($filename)) {
+    // Save the recording title into a cookie (for updating
+    // the form with JS to reflect the chosen recording).
+    setcookie('recording', $title, 0, '/');
+
     // Automatically close the popup window
     echo '<script type="text/javascript">self.close()</script>';
 

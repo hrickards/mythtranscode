@@ -31,6 +31,22 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot.'/course/moodleform_mod.php');
 
+// Load the (optional) javascript for the form. It just updates the choose recording
+// field when a recording is chosen.
+$course_id = optional_param('course', 0, PARAM_INT); // Course_module ID.
+$change_link = html_writer::link(
+    new moodle_url('/mod/mythtranscode/choose.php', array('course'=>$course_id)),
+    'Change',
+    array('target' => '_blank', 'class' => 'mythtranscode_link')
+);
+$jsdata = array('change' => $change_link);
+$jsmodule = array(
+    'name' => 'mod_mythtranscode_form',
+    'fullpath' => '/mod/mythtranscode/mod_form.js',
+    'requires' => array('base', 'cookie', 'node')
+);
+$PAGE->requires->js_init_call('M.mod_mythtranscode_form.init', $jsdata, false, $jsmodule);
+
 /**
  * Module instance settings form
  *
@@ -68,9 +84,10 @@ class mod_mythtranscode_mod_form extends moodleform_mod {
         $link = html_writer::link(
             new moodle_url('/mod/mythtranscode/choose.php', array('course'=>$course_id)),
             'Choose a television programme',
-            array('target' => '_blank')
+            array('target' => '_blank', 'class' => 'mythtranscode_link')
         );
-        $mform->addElement('static', 'choose_recording', 'Programme', $link);
+        $mform->addElement('static', 'choose_recording', 'Programme',
+            html_writer::tag('div', $link, array('id'=>'mythtranscode_choose_recording')));
 
         // Add standard elements, common to all modules.
         $this->standard_coursemodule_elements();

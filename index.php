@@ -24,7 +24,6 @@
  */
 
 // TODO Put on moodle modules site
-// TODO Check process
 // TODO Check logs
 
 require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
