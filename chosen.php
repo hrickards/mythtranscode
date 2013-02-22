@@ -37,11 +37,10 @@ $course = $DB->get_record('course', array('id' => $course_id), '*', MUST_EXIST);
 // Some initial setup.
 require_login($course);
 
-add_to_log($course->id, 'mythtranscode', 'choose', "chosen.php?course={$course_id}&basename={$basename}", $mythtranscode->name);
+add_to_log($course->id, 'mythtranscode', 'choose', "chosen.php?course={$course_id}&basename={$basename}", 'mythtranscode');
 $PAGE->set_url('/mod/mythtranscode/chosen.php', array('course' => $course_id, 'basename' => $basename));
 
 // Store the recording ID into the session
-session_start();
 $_SESSION['basename'] = $basename;
 
 // Get the video filename (we need this for checking if any recordings are prsent)
@@ -64,9 +63,8 @@ if (mythtranscode_recording_has_files($filename)) {
     echo "<button onclick='self.close();'>{$close_text}</button>";
 } else {
     // Print the page header.
-    $PAGE->set_title(format_string($mythtranscode->name));
+    $PAGE->set_title(get_string('choose_title', 'mythtranscode'));
     $PAGE->set_heading(format_string($course->fullname));
-    $PAGE->set_context($context);
 
     // Output starts here.
     echo $OUTPUT->header();

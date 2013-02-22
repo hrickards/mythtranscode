@@ -40,14 +40,13 @@ $course = $DB->get_record('course', array('id' => $course_id), '*', MUST_EXIST);
 // Some initial setup.
 require_login($course);
 
-add_to_log($course->id, 'mythtranscode', 'choose', "choose.php?course={$course_id}", $mythtranscode->name);
+add_to_log($course->id, 'mythtranscode', 'choose', "choose.php?course={$course_id}", 'mythtranscode');
 
 // Print the page header.
 
 $PAGE->set_url('/mod/mythtranscode/choose.php', array('course' => $course_id));
 $PAGE->set_title(get_string('choose_title', 'mythtranscode'));
 $PAGE->set_heading(format_string($course->fullname));
-$PAGE->set_context($context);
 
 // Output starts here.
 echo $OUTPUT->header();
