@@ -45,7 +45,7 @@ add_to_log($course->id, 'mythtranscode', 'choose', "choose.php?course={$course_i
 // Print the page header.
 
 $PAGE->set_url('/mod/mythtranscode/choose.php', array('course' => $course_id));
-$PAGE->set_title(format_string($mythtranscode->name));
+$PAGE->set_title(get_string('choose_title', 'mythtranscode'));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($context);
 

@@ -26,7 +26,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['modulename'] = 'Television Programmes';
+$string['modulename'] = 'Television Programme';
 $string['modulenameplural'] = 'Television Programmes';
 $string['modulename_help'] = 'Allows access to recorded television programmes';
 $string['mythtranscodefieldset'] = 'Television Programmes';
@@ -35,6 +35,7 @@ $string['mythtranscodename_help'] = 'Name of the link to the television programm
 $string['mythtranscode'] = 'Mythtranscode';
 $string['pluginadministration'] = 'mythtranscode administration';
 $string['pluginname'] = 'Mythtranscode';
+$string['choose_title'] = 'Choose Programme';
 
 $string['must_specify_id'] = 'You must specify a course_module ID or an instance ID';
 $string['heading'] = 'Television Programmes';
