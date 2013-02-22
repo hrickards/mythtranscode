@@ -15,7 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * The main mythtranscode configuration form
+ * The main mythtranscode configuration form, used for creating and configuring
+ * an instance of the module in a course
  *
  * It uses the standard core Moodle formslib. For more info about them, please
  * visit: http://docs.moodle.org/en/Development:lib/formslib.php
@@ -42,7 +43,7 @@ class mod_mythtranscode_mod_form extends moodleform_mod {
      * Defines forms elements
      */
     public function definition() {
-        $course_id = optional_param('course', 0, PARAM_INT); // Course_module ID. or
+        $course_id = optional_param('course', 0, PARAM_INT); // Course_module ID.
 
         $mform = $this->_form;
 
@@ -63,9 +64,13 @@ class mod_mythtranscode_mod_form extends moodleform_mod {
         // Adding the standard "intro" and "introformat" fields.
         $this->add_intro_editor();
 
-
         // Link to choose a television recording
-        $mform->addElement('static', 'choose_recording', 'Programme', html_writer::link(new moodle_url('/mod/mythtranscode/choose.php', array('course'=>$course_id)), 'Choose a television programme', array('target' => '_blank')));
+        $link = html_writer::link(
+            new moodle_url('/mod/mythtranscode/choose.php', array('course'=>$course_id)),
+            'Choose a television programme',
+            array('target' => '_blank')
+        );
+        $mform->addElement('static', 'choose_recording', 'Programme', $link);
 
         // Add standard elements, common to all modules.
         $this->standard_coursemodule_elements();

@@ -24,7 +24,8 @@
  */
 
 // TODO Put on moodle modules site
-// TODO Clean up
+// TODO Check process
+// TODO Check logs
 
 require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
 require_once(dirname(__FILE__).'/lib.php');
@@ -57,6 +58,9 @@ if ($mythtranscode->intro) { // Conditions to show the intro can change to look 
         'generalbox mod_introbox', 'mythtranscodeintro');
 }
 
+// Output a notification, saying this feature is currently unsupported (potentially, this would be
+// something akin to allowing access to all recorings/all recordings added under the current
+// course). However, moodle still requires this page for compatibility.
 echo $OUTPUT->notification(get_string('no_index_page', 'mythtranscode'));
 
 // Finish the page.

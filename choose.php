@@ -79,7 +79,7 @@ if (!$results) {
         array_push($data, $row);
     }
 
-    // Render the results.
+    // Render the results, with each one containing a link to chosen.php.
     $output = $PAGE->get_renderer('mod_mythtranscode');
     $results_table = new mythtranscode_results_table($data, $base_data);
     echo $output->render($results_table);

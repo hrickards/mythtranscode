@@ -60,7 +60,7 @@ if ($mythtranscode->intro) { // Conditions to show the intro can change to look 
 // be sent
 $param_string = "id={$id}";
 
-// Get the basename from the database
+// Get the basename from the retrieved course details
 $basename = $mythtranscode->basename;
 
 // Get the video filename, title, date and channel
@@ -72,7 +72,8 @@ if (mythtranscode_recording_has_files($filename)) {
     $video = new mythtranscode_video($filename, $param_string, $title, $date, $channel);
     echo $output->render($video);
 } else {
-    // Display an informative message
+    // Otherwise, display an informative message
+    // TODO Do this when the teacher chooses a recording as well
     echo $OUTPUT->notification(get_string('unavailable_recording', 'mythtranscode'));
 }
 
