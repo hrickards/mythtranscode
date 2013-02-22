@@ -113,7 +113,8 @@ $string['execute_error'] = 'Error querying database: execute() failed. Please se
 $string['fetch_error'] = 'Error querying database: fetch() failed. Please see your system administrator';
 
 $string['copyright_string'] = 'This recording is to be used only for educational and non-commercial purposes under the terms of the ERA Licence.';
-$string['unavailable_recording'] = 'Sorry, that recording is currently unavailable';
+$string['unavailable_recording'] = 'Sorry, that recording is currently unavailable.';
+$string['pick_another'] = 'Please choose another recording, using the back button of your browser to return to the previous page.';
 $string['basename_not_found'] = 'Please select a programme and try again';
 $string['no_index_page'] = 'This functionality is not available at the moment';
 

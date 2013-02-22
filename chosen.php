@@ -25,6 +25,7 @@
 
 require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
 require_once(dirname(__FILE__).'/lib.php');
+require_once(dirname(__FILE__).'/locallib.php');
 
 // Get the course and recording IDs
 $course_id = required_param('course', PARAM_INT); // Course_module ID. or
@@ -42,12 +43,34 @@ add_to_log($course->id, 'mythtranscode', 'choose', "chosen.php?course={$course_i
 session_start();
 $_SESSION['basename'] = $basename;
 
-// Automatically close the popup window
-echo '<script type="text/javascript">self.close()</script>';
+// Get the video filename (we need this for checking if any recordings are prsent)
+list($filename, $_, $_, $_) = mythtranscode_get_filename_metadata($basename);
 
-// Output starts here.
-echo $OUTPUT->header();
+// If the recording has transcodings
+if (mythtranscode_recording_has_files($filename)) {
+    // Automatically close the popup window
+    echo '<script type="text/javascript">self.close()</script>';
 
-// Output a close window button
-$close_text = get_string('close_window', 'mythtranscode');
-echo "<button onclick='self.close();'>{$close_text}</button>";
+    // Output starts here.
+    echo $OUTPUT->header();
+
+    // Output a close window button
+    $close_text = get_string('close_window', 'mythtranscode');
+    echo "<button onclick='self.close();'>{$close_text}</button>";
+} else {
+    // Print the page header.
+    $PAGE->set_url('/mod/mythtranscode/chosen.php', array('course' => $course_id, 'basename' => $basename));
+    $PAGE->set_title(format_string($mythtranscode->name));
+    $PAGE->set_heading(format_string($course->fullname));
+    $PAGE->set_context($context);
+
+    // Output starts here.
+    echo $OUTPUT->header();
+
+    // Output a message saying the recording is currently unavailable, and ask them to try again
+    echo $OUTPUT->notification(get_string('unavailable_recording', 'mythtranscode') . ' ' .
+        get_string('pick_another', 'mythtranscode'));
+
+    // Output footer
+    echo $OUTPUT->footer();
+}

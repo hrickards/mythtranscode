@@ -73,7 +73,6 @@ if (mythtranscode_recording_has_files($filename)) {
     echo $output->render($video);
 } else {
     // Otherwise, display an informative message
-    // TODO Do this when the teacher chooses a recording as well
     echo $OUTPUT->notification(get_string('unavailable_recording', 'mythtranscode'));
 }
 
