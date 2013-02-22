@@ -119,3 +119,5 @@ $string['basename_not_found'] = 'Please select a programme and try again';
 $string['no_index_page'] = 'This functionality is not available at the moment';
 
 $string['close_window'] = 'Return to form';
+$string['choose_programme'] = 'Choose a television programme';
+$string['change_programme'] = 'Change';

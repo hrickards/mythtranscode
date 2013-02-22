@@ -36,7 +36,7 @@ require_once($CFG->dirroot.'/course/moodleform_mod.php');
 $course_id = optional_param('course', 0, PARAM_INT); // Course_module ID.
 $change_link = html_writer::link(
     new moodle_url('/mod/mythtranscode/choose.php', array('course'=>$course_id)),
-    'Change',
+    get_string('change_programme', 'mythtranscode'),
     array('target' => '_blank', 'class' => 'mythtranscode_link')
 );
 $jsdata = array('change' => $change_link);
@@ -83,7 +83,7 @@ class mod_mythtranscode_mod_form extends moodleform_mod {
         // Link to choose a television recording
         $link = html_writer::link(
             new moodle_url('/mod/mythtranscode/choose.php', array('course'=>$course_id)),
-            'Choose a television programme',
+            get_string('choose_programme', 'mythtranscode'),
             array('target' => '_blank', 'class' => 'mythtranscode_link')
         );
         $mform->addElement('static', 'choose_recording', 'Programme',
