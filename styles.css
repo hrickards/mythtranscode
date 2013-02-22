@@ -51,9 +51,9 @@ a.mythtranscode_link:visited { color: #800080 }
 a.mythtranscode_link:hover { color: #0000FF }
 
 a.mythtranscode_copyright { font-weight: bold}
-a.mythtranscode_copyright:link { color: red }
-a.mythtranscode_copyright:active { color: red }
-a.mythtranscode_copyright:visited { color: red }
-a.mythtranscode_copyright:hover { color: red }
+a.mythtranscode_copyright:link { color: red !important }
+a.mythtranscode_copyright:active { color: red !important }
+a.mythtranscode_copyright:visited { color: red !important }
+a.mythtranscode_copyright:hover { color: red !important }
 
 div.mythtranscode_video_links { padding: 0.5em 0 }
