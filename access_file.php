@@ -50,7 +50,7 @@ $context = get_context_instance(CONTEXT_MODULE, $cm->id);
 add_to_log($course->id, 'mythtranscode', 'view', "view.php?id={$cm->id}", $mythtranscode->name, $cm->id);
 
 // Get the filename of the video to access.
-$filename = required_param('filename', '', PARAM_CLEAN);
+$filename = required_param('filename', PARAM_CLEAN);
 
 // Split the filename on dots (e.g., foo.bar.baz.qux.webm ->
 // ['foo', 'bar', 'baz', 'qux', 'webm']).
