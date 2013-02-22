@@ -328,8 +328,12 @@ class mod_mythtranscode_renderer extends plugin_renderer_base {
 
         global $CFG;
 
-        // For each format the video is stored in.
-        foreach (mythtranscode_get_formats() as $format) {
+        // For each format the video is stored in. The formats are sorted
+        // as it leads to webm being a last resort for the browser, which is better (seeking
+        // support is not great)
+        $formats = mythtranscode_get_formats();
+        sort($formats);
+        foreach ($formats as $format) {
             // Generate an HTML5 video tag.
             $tag = html_writer::empty_tag('source', array('src' => $video->urls[$format],
                 'type' => "video/{$format}"));
