@@ -1,4 +1,4 @@
-<?php
+<?PHP
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -96,6 +96,12 @@ function mythtranscode_update_instance(stdClass $mythtranscode, mod_mythtranscod
 
     $mythtranscode->timemodified = time();
     $mythtranscode->id = $mythtranscode->instance;
+
+    // Add the basename from the session to the record, if it's there.
+    $basename = $_SESSION['basename'];
+    if (isset($basename)) {
+        $mythtranscode->basename = $basename;
+    }
 
     return $DB->update_record('mythtranscode', $mythtranscode);
 }

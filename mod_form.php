@@ -33,9 +33,17 @@ require_once($CFG->dirroot.'/course/moodleform_mod.php');
 
 // Load the (optional) javascript for the form. It just updates the choose recording
 // field when a recording is chosen.
-$course_id = optional_param('course', 0, PARAM_INT); // Course_module ID.
+$course_id = optional_param('course', 0, PARAM_INT); // Course_module ID, or
+$id  = optional_param('update', 0, PARAM_INT);  // mythtranscode instance ID.
+if ($course_id) {
+    $base_data = array('course' => $course_id);
+} elseif ($id) {
+    $base_data = array('id' => $id);
+} else {
+    error('You must specify a course_id ID or an instance ID');
+}
 $change_link = html_writer::link(
-    new moodle_url('/mod/mythtranscode/choose.php', array('course'=>$course_id)),
+    new moodle_url('/mod/mythtranscode/choose.php', $base_data),
     get_string('change_programme', 'mythtranscode'),
     array('target' => '_blank', 'class' => 'mythtranscode_link')
 );
@@ -59,7 +67,15 @@ class mod_mythtranscode_mod_form extends moodleform_mod {
      * Defines forms elements
      */
     public function definition() {
-        $course_id = optional_param('course', 0, PARAM_INT); // Course_module ID.
+        $course_id = optional_param('course', 0, PARAM_INT); // Course_module ID, or
+        $id  = optional_param('update', 0, PARAM_INT);  // mythtranscode instance ID.
+        if ($course_id) {
+            $base_data = array('course' => $course_id);
+        } elseif ($id) {
+            $base_data = array('id' => $id);
+        } else {
+            error('You must specify a course_id ID or an instance ID');
+        }
 
         $mform = $this->_form;
 
@@ -82,7 +98,7 @@ class mod_mythtranscode_mod_form extends moodleform_mod {
 
         // Link to choose a television recording
         $link = html_writer::link(
-            new moodle_url('/mod/mythtranscode/choose.php', array('course'=>$course_id)),
+            new moodle_url('/mod/mythtranscode/choose.php', $base_data),
             get_string('choose_programme', 'mythtranscode'),
             array('target' => '_blank', 'class' => 'mythtranscode_link')
         );

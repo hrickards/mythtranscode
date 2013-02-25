@@ -28,17 +28,26 @@ require_once(dirname(__FILE__).'/lib.php');
 require_once(dirname(__FILE__).'/locallib.php');
 
 // Get the course and recording IDs
-$course_id = required_param('course', PARAM_INT); // Course_module ID. or
+$course_id = optional_param('course', 0, PARAM_INT); // Course_module ID, or
+$id  = optional_param('id', 0, PARAM_INT);  // mythtranscode instance ID.
 $basename = required_param('basename', PARAM_CLEAN);
 
 // Retrieve course details.
-$course = $DB->get_record('course', array('id' => $course_id), '*', MUST_EXIST);
+if ($course_id) {
+    $course = $DB->get_record('course', array('id' => $course_id), '*', MUST_EXIST);
+} elseif ($id) {
+    $cm         = get_coursemodule_from_id('mythtranscode', $id, 0, false, MUST_EXIST);
+    $course     = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
+} else {
+    error('You must specify a course_module ID or an instance ID');
+}
+$course = $DB->get_record('course', array('id' => $course->id), '*', MUST_EXIST);
 
 // Some initial setup.
 require_login($course);
 
-add_to_log($course->id, 'mythtranscode', 'choose', "chosen.php?course={$course_id}&basename={$basename}", 'mythtranscode');
-$PAGE->set_url('/mod/mythtranscode/chosen.php', array('course' => $course_id, 'basename' => $basename));
+add_to_log($course->id, 'mythtranscode', 'choose', "chosen.php?course={$course->id}&basename={$basename}", 'mythtranscode');
+$PAGE->set_url('/mod/mythtranscode/chosen.php', array('course' => $course->id, 'basename' => $basename));
 
 // Store the recording ID into the session
 $_SESSION['basename'] = $basename;

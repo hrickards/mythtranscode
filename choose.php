@@ -32,19 +32,29 @@ require_once(dirname(__FILE__).'/lib.php');
 require_once(dirname(__FILE__).'/locallib.php');
 require_once(dirname(__FILE__).'/renderer.php');
 
-$course_id = required_param('course', PARAM_INT); // Course_module ID. or
+$course_id = optional_param('course', 0, PARAM_INT); // Course_module ID, or
+$id  = optional_param('id', 0, PARAM_INT);  // mythtranscode instance ID.
 
 // Retrieve course details.
-$course = $DB->get_record('course', array('id' => $course_id), '*', MUST_EXIST);
+if ($course_id) {
+    $course = $DB->get_record('course', array('id' => $course_id), '*', MUST_EXIST);
+    $base_data = array('course' => $course_id);
+} elseif ($id) {
+    $cm         = get_coursemodule_from_id('mythtranscode', $id, 0, false, MUST_EXIST);
+    $course     = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
+    $base_data = array('id' => $id);
+} else {
+    error('You must specify a course_module ID or an instance ID');
+}
+$course = $DB->get_record('course', array('id' => $course->id), '*', MUST_EXIST);
 
 // Some initial setup.
 require_login($course);
 
-add_to_log($course->id, 'mythtranscode', 'choose', "choose.php?course={$course_id}", 'mythtranscode');
+add_to_log($course->id, 'mythtranscode', 'choose', "choose.php", 'mythtranscode');
 
 // Print the page header.
-
-$PAGE->set_url('/mod/mythtranscode/choose.php', array('course' => $course_id));
+$PAGE->set_url('/mod/mythtranscode/choose.php', $base_data);
 $PAGE->set_title(get_string('choose_title', 'mythtranscode'));
 $PAGE->set_heading(format_string($course->fullname));
 
@@ -56,9 +66,6 @@ echo $OUTPUT->heading(get_string('heading', 'mythtranscode'));
 // Get search parameters --- the query and the no. of results to start at (for pagination).
 $query = optional_param('query', '', PARAM_TEXT);
 $start = optional_param('start', 0, PARAM_INT);
-
-// Need to pass on course id
-$base_data = array('course' => $course_id);
 
 // Output a search form.
 $mform = new mythtranscode_search_form($base_data, $query);
