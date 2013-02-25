@@ -77,6 +77,12 @@ class mod_mythtranscode_mod_form extends moodleform_mod {
             error('You must specify a course_id ID or an instance ID');
         }
 
+        // Remove any existing chosen programmes, if an existing instance isn't being edited
+        $update = optional_param('update', -1, PARAM_INT); // Course_module ID, or
+        if (!$id and $update != 0) {
+            unset($_SESSION['basename']);
+        }
+
         $mform = $this->_form;
 
         // Adding the "general" fieldset, where all the common settings are showed.
@@ -109,5 +115,22 @@ class mod_mythtranscode_mod_form extends moodleform_mod {
         $this->standard_coursemodule_elements();
         // Add standard buttons, common to all modules.
         $this->add_action_buttons();
+    }
+
+    /**
+     * Validates the form (actually just checks a programme has been chosen)
+     */
+    public function validation($data, $files) {
+        // Get any other standard errors
+        $errors = parent::validation($data, $files);
+
+        // If a programme has not been chosen and an instance is not being edited
+        $course_id = optional_param('course', 0, PARAM_INT); // Course_module ID, or
+        $id  = optional_param('update', 0, PARAM_INT);  // mythtranscode instance ID.
+        if (!(isset($_SESSION['basename'])) and !$id) {
+            $errors['choose_recording'] = get_string('basename_not_found', 'mythtranscode');
+        }
+
+        return $errors;
     }
 }

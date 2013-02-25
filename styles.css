@@ -57,3 +57,4 @@ a.mythtranscode_copyright:visited { color: red !important }
 a.mythtranscode_copyright:hover { color: red !important }
 
 div.mythtranscode_video_links { padding: 0.5em 0 }
+div#mythtranscode_choose_recording { color: black }
