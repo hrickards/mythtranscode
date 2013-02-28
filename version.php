@@ -30,6 +30,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $module->version   = 1;               // If version == 0 then module will not be installed.
+$module->release   = '1.0 (Build: 2013022800)'; // Human-readable release name
 $module->requires  = 2010112400;      // Requires this Moodle version (v2.0).
 $module->cron      = 0;               // Period for cron to check this module (secs).
 $module->component = 'mod_mythtranscode'; // To check on upgrade, that module sits in correct place.
