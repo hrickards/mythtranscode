@@ -118,18 +118,18 @@ class mythtranscode_pagination {
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class mythtranscode_search_form {
-    public $basedata;
+    public $base_data;
     public $query;
 
     /**
      * Construction function.
      *
-     * @param $basedata --- any data that should be passed on when the form
+     * @param $base_data --- any data that should be passed on when the form
      * submits
      * @param $query --- an existing query to prefill the search box with
      */
-    public function __construct($basedata, $query) {
-        $this->basedata = $basedata;
+    public function __construct($base_data, $query) {
+        $this->base_data = $base_data;
         $this->query = $query;
     }
 
@@ -148,8 +148,11 @@ class mythtranscode_search_form {
 
         // Add a hidden field containing the course id. This is needed
         // as the data is being posted to the current page, which requires a
-        // course id.
-        $form .= "<input type='hidden' name='course' value='{$this->basedata['course']}'>";
+        // course id. Done this way in case other data than the course id
+        // needs to be posted.
+        foreach($this->base_data as $key => $value) {
+            $form .= "<input type='hidden' name='{$key}' value='{$value}'>";
+        }
 
         // Add a search button.
         $form .= '<button type="submit">Search</button></form>';
