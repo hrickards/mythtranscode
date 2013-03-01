@@ -256,7 +256,7 @@ class mythtranscode_results_table implements renderable {
             // If we need to, make the text in the cell bold
             if (in_array($key, mythtranscode_get_bold_fields())) {
                 $text = html_writer::tag('b', $cell);
-            } else if ($key === 'progstart') {
+            } else if ($key === 'starttime') {
                 // Format the date
                 $text = mythtranscode_format_date($cell);
             } else {

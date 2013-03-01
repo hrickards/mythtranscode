@@ -47,7 +47,7 @@ function mythtranscode_get_filename_metadata($basename) {
     // Retrive the record from recorded
     // For explanation of depth of error-reporting, see
     // http://stackoverflow.com/questions/2552545
-    $stmt = $mysqli->prepare("SELECT title, description, progstart, chanid, seriesid FROM {$CFG->mod_mythtranscode_table} WHERE basename = ? LIMIT 1");
+    $stmt = $mysqli->prepare("SELECT title, description, starttime, chanid, seriesid FROM {$CFG->mod_mythtranscode_table} WHERE basename = ? LIMIT 1");
     if (false===$stmt) {
         print_error(get_string('prepare_error', 'mythtranscode'));
     }
@@ -59,7 +59,7 @@ function mythtranscode_get_filename_metadata($basename) {
     if (false===$rc) {
         print_error(get_string('execute_error', 'mythtranscode'));
     }
-    $rc = $stmt->bind_result($title, $description, $progstart, $chanid, $seriesid);
+    $rc = $stmt->bind_result($title, $description, $starttime, $chanid, $seriesid);
     if (false===$rc) {
         print_error(get_string('bind_result_error', 'mythtranscode'));
     }
@@ -106,12 +106,14 @@ function mythtranscode_get_filename_metadata($basename) {
     }
 
     // Find the corresponding mythexport record by finding a record where the
-    // title, description and progstart->airDate match exactly
-    $stmt = $mysqli->prepare("SELECT file FROM {$CFG->mod_mythtranscode_encoded_table} WHERE title = ? AND description = ? AND airDate = ? LIMIT 1");
+    // title, description and starttime->airDate match exactly
+    $stmt = $mysqli->prepare("SELECT file FROM {$CFG->mod_mythtranscode_encoded_table}
+                              WHERE title = ? AND description = ? AND airDate = ? AND file IS NOT NULL
+                              LIMIT 1");
     if (false===$stmt) {
         print_error(get_string('prepare_error', 'mythtranscode'));
     }
-    $rc = $stmt->bind_param('sss', $title, $description, $progstart);
+    $rc = $stmt->bind_param('sss', $title, $description, $starttime);
     if (false===$rc) {
         print_error(get_string('bind_param_error', 'mythtranscode'));
     }
@@ -129,7 +131,7 @@ function mythtranscode_get_filename_metadata($basename) {
     }
     $stmt->close();
 
-    return array($filename, $title, $progstart, $channel);
+    return array($filename, $title, $starttime, $channel);
 }
 
 /**
@@ -215,7 +217,7 @@ function mythtranscode_retrieve_results($query, $start) {
                         )
                         ORDER BY weight DESC";
     } else {
-        $base_query .= " ORDER BY progstart DESC";
+        $base_query .= " ORDER BY starttime DESC";
     }
 
     // Retrieve a limited number of results. Note: string interpolation cannot

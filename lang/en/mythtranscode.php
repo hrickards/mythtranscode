@@ -46,7 +46,7 @@ $string['key_title'] = 'Title';
 $string['key_description'] = 'Description';
 $string['key_subtitle'] = 'Subtitle';
 $string['key_category'] = 'Category';
-$string['key_progstart'] = 'Air date';
+$string['key_starttime'] = 'Air date';
 
 $string['format_mp4'] = 'MP4';
 $string['format_webm'] = 'WebM';

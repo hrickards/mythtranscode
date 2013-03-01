@@ -93,7 +93,7 @@ $settings->add($setting);
 $name = 'mod_mythtranscode_keys';
 $title = get_string('setting_keys_title', 'mythtranscode');
 $description = get_string('setting_keys_description', 'mythtranscode');
-$default = 'title,description,category,progstart';
+$default = 'title,description,category,starttime';
 $setting = new admin_setting_configtext($name, $title, $description, $default, PARAM_CLEAN, 12);
 $settings->add($setting);
 
